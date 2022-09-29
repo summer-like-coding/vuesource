@@ -108,7 +108,7 @@
         : String(val)
   }
 
-  console.log(toString({name:'summer',age:12}))
+  // console.log(toString({name:'summer',age:12}))
   /**
    * Convert an input value to a number for persistence.
    * If the conversion fails, return original string.
@@ -131,11 +131,14 @@
     for (var i = 0; i < list.length; i++) {
       map[list[i]] = true;
     }
+    // return map
     return expectsLowerCase
       ? function (val) { return map[val.toLowerCase()]; }
       : function (val) { return map[val]; }
   }
 
+
+  // console.log(makeMap("1,2,3,4,5,a,s,d,f",true)("6"));
   /**
    * Check if a tag is a built-in tag.
    */
@@ -157,7 +160,7 @@
       }
     }
   }
-
+  console.log(remove([1,2,3,4,5],3));
   /**
    * Check whether an object has the property.
    */
@@ -171,27 +174,32 @@
    */
   function cached (fn) {
     var cache = Object.create(null);
-    return (function cachedFn (str) {
+    return (function cachedFn(str) {
+      // console.log("str",str);
       var hit = cache[str];
+      // console.log("hit",hit);
       return hit || (cache[str] = fn(str))
     })
   }
-
-  /**
-   * Camelize a hyphen-delimited string.
-   */
   var camelizeRE = /-(\w)/g;
-  var camelize = cached(function (str) {
-    return str.replace(camelizeRE, function (_, c) { return c ? c.toUpperCase() : ''; })
-  });
+  var change = (match, p1, offset, string) => {
+    // console.log("是些1",match, p1, offset, string);
+    return p1 ? p1.toUpperCase() : '';
+  }
+  var value = (str) => {
+    return str.replace(camelizeRE, change)
+  }
+  var camelize = cached(value);
 
+  // console.log(camelize('on-click'));
+  // console.log(value('on-click'));
   /**
    * Capitalize a string.
    */
   var capitalize = cached(function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
   });
-
+  // console.log(capitalize("nihao"));
   /**
    * Hyphenate a camelCase string.
    */
@@ -199,7 +207,7 @@
   var hyphenate = cached(function (str) {
     return str.replace(hyphenateRE, '-$1').toLowerCase()
   });
-
+console.log(hyphenate("onClick"));
   /**
    * Simple bind polyfill for environments that do not support it,
    * e.g., PhantomJS 1.x. Technically, we don't need this anymore
