@@ -219,10 +219,10 @@
 
   /* istanbul ignore next */
   function polyfillBind(fn, ctx) {
-    console.log("fn",fn);
-    console.log("ctx",ctx);
+    // console.log("fn",fn);
+    // console.log("ctx",ctx);
     function boundFn(a) {
-      console.log("a",a);
+      // console.log("a",a);
       var l = arguments.length;
       return l
         ? l > 1
@@ -235,7 +235,7 @@
     return boundFn
   }
   let noBind = polyfillBind(list,null)
-  console.log("noBind",noBind([1,2,3]));
+  // console.log("noBind",noBind([1,2,3]));
   function nativeBind(fn, ctx) {
     // console.log("fn",fn);
     // console.log("ctx",ctx);
@@ -247,13 +247,13 @@
     : polyfillBind;
   // console.log(bind);
   function list() {
-    console.log("arguments",arguments);
+    // console.log("arguments",arguments);
     return [...arguments]
   }
   // console.log("what",typeof Function.prototype.bind);
   // console.log(list(1,2,3));
   let bindFun = bind(list,null)
-  console.log("bindFun",bindFun(1,2,3));
+  // console.log("bindFun",bindFun(1,2,3));
   // console.log("bind",bind(list,37)());
   /**
    * Convert an Array-like object to a real Array.
@@ -261,8 +261,10 @@
   function toArray(list, start) {
     start = start || 0;
     var i = list.length - start;
+    // 确定array的大小
     var ret = new Array(i);
     while (i--) {
+      // 将数放进去
       ret[i] = list[i + start];
     }
     return ret
@@ -277,7 +279,14 @@
     }
     return to
   }
-
+  let obj2 = { name: 'summer', age: 13, hobby: ["music", 'coding'] }
+  let obj3 = extend({},obj2)
+  console.log(obj3);
+  obj3.name = "alex"
+  console.log(obj3);
+  obj3.hobby = ["sing", 'basketball']
+  console.log(obj3);
+  console.log("obj2",obj2);
   /**
    * Merge an Array of Objects into a single Object.
    */
@@ -290,7 +299,8 @@
     }
     return res
   }
-
+  // console.log("toObject",toObject([[1,2]]));
+  console.log("toObject",toObject([[1,2],[3,4]]));
   /* eslint-disable no-unused-vars */
 
   /**
